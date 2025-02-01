@@ -1,16 +1,17 @@
 from os import path
 from qtheme.utils.colors import red
-from qtheme.cli import Qtile, Kitty
+from qtheme.cli import Qtile, Kitty, Menu
 from argparse import ArgumentParser
 
 
 user_path = path.expanduser('~')
-__version__ = '1.5'
+__version__ = '1.5.1'
 
 def main():
     try:
         qtile = Qtile(user_path)
         kitty = Kitty(user_path)
+        menu = Menu(user_path)
         parser = ArgumentParser(
             prog='qtheme',
             description='Ideal tool to control the themes of your qtile environment and your kitty terminal.'
@@ -30,7 +31,7 @@ def main():
         if args.list:
             if args.theme or args.position:
                 parser.error('The command --list does not accept addicional arguments')
-            qtile.menu_themes()
+            menu.menu_themes()
             return
 
         qtile.set_qtile_theme(args.theme)
