@@ -1,4 +1,5 @@
 from os import path
+import subprocess
 from qtheme.utils.colors import green, red
 
 
@@ -33,6 +34,7 @@ class Kitty:
                 file.writelines(lines)
                 file.truncate()
 
+            subprocess.run(['kitty', '@', 'load-config'], check=True)
             green(f'Kitty terminal theme set to "{theme}".')
 
         except (FileNotFoundError, ValueError) as e:
@@ -63,6 +65,7 @@ class Kitty:
                 file.writelines(lines)
                 file.truncate()
 
+            subprocess.run(['kitty', '@', 'load-config'], check=True)
             green(f'Kitty terminal font set to "{font_family}".')
 
         except (FileNotFoundError, ValueError) as e:
@@ -93,6 +96,7 @@ class Kitty:
                 file.writelines(lines)
                 file.truncate()
 
+            subprocess.run(['kitty', '@', 'load-config'], check=True)
             green(f'Kitty terminal opacity set to "{opacity}".')
 
         except (FileNotFoundError, ValueError) as e:
