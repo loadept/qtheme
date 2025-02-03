@@ -10,7 +10,5 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Hola
-        run: echo "Hola bro"
-
-      - name: Upload
-        run: ls -la 
+        run: |
+          python -c 'print("\033[33mhola\033[0m")'
