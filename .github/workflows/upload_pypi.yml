@@ -1,6 +1,8 @@
 name: Upload to PyPi
 
 on:
+  push:
+    branches: ["master"]
   release:
     types: [published]
 
@@ -15,8 +17,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd qtheme
-          ls
           pip install -r requirements.txt
           pip freeze | sed -E 's/([^=]+)/\x1b[32m&\x1b[0m/g'
 
