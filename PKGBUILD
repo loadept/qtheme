@@ -9,12 +9,13 @@ arch=('any')
 license=('MIT')
 depends=('python>=3.12' 'qtile' 'kitty' 'fastfetch')
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('9f44978cf5381ff31c9fad804e680b24451e1da9f8f9fb6c891f43d925635fce6f9f7bed335c10d0e0b5faa7f5d2f4faa059d173a4b8961e81751dfe1087becb')
+sha512sums=('d4ae9537158580990856efc5e0ead898582a5e9bb119ec64b16b3165ec236f34a68c7a9d07f20bec3fa247b1ded6aa4bfe6998f8070a5626842c710d1ef52202')
 
 build() {
 	cd $pkgname-$pkgver
 	python setup.py build
 }
+
 package() {
 	cd $pkgname-$pkgver
 	python setup.py install --prefix=/usr --root="${pkgdir}" -O1 --skip-build
