@@ -9,3 +9,4 @@ build
 *.pkg.tar.zst
 src
 .pypirc
+.mypy_cache

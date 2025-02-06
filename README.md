@@ -69,9 +69,9 @@ qtheme --terminal-font [font-family]
 
 You can use the parameters together
 ```sh
-qtheme -T onedark -To 0.80 -Tf "UbuntuMono Nerd Font"
+qtheme -t onedark -To 0.80 -kf "UbuntuMono Nerd Font"
 ```
 
 You can also use the qtile and kitty parameters
 ```sh
-qtheme -t forest -p b -T onedark -To 1 - Tf "Hack Nerd Font"
+qtheme -t forest -p b -k onedark -ko 1 -kf "Hack Nerd Font"
