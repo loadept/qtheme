@@ -64,6 +64,8 @@ jobs:
 
   Update-PKGBUILD:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     needs:
       - Check-Sintax
       - Upload-PyPi 
@@ -80,11 +82,15 @@ jobs:
           tag=$(git describe --tags --abbrev=0)
           wget https://github.com/loadept/qtheme/archive/refs/tags/${tag}.tar.gz
 
-      - name: Get sha
+      - name: Get SHA512 checksum
         run: |
           tag=$(git describe --tags --abbrev=0)
           sha=$(sha512sum $tag.tar.gz | awk '{print $1}')
           sed -i "s/^sha512sums=('.*')\$/sha512sums=('$sha')/" PKGBUILD
-          git add PKGBUILD
-          git commit -m "update sha from $tag"
-          git push
+          rm -f "${tag}.tar.gz"
+
+      - name: Push commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update sha512sum for new release
+          file_pattern: "PKGBUILD"
