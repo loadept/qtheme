@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+      - name: Check python version
+        run: |
+          python --version
+
       - name: Clone project
         uses: actions/checkout@v4
         with:
@@ -27,8 +31,14 @@ jobs:
         run: |
           flake8
       
-      - name: Validate builds
+      - name: Validate setup
         run: |
           python setup.py check
+
+      - name: Validate build dist
+        run: |
           python setup.py sdist bdist_wheel
+
+      - name: Validate twine dist
+        run: |
           twine check dist/*
