@@ -45,3 +45,10 @@ jobs:
       - name: Validate twine dist
         run: |
           twine check dist/*
+
+      - name: Check http clients
+        run: |
+          wget --version
+          curl --version
+          git --version
+          sha512sum --version
