@@ -46,9 +46,12 @@ jobs:
         run: |
           twine check dist/*
 
-      - name: Check http clients
+      - name: Download tarball
         run: |
-          wget --version
-          curl --version
-          git --version
-          sha512sum --version
+          tag=$(git describe --tags --abbrev=0)
+          wget https://github.com/loadept/qtheme/archive/refs/tags/${tag}.tar.gz
+
+      - name: get sha
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          sha512sum $tag.tar.gz 
