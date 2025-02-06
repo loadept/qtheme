@@ -6,7 +6,7 @@ on:
       - v*
 
 jobs:
-  Check-Sintax:
+  Check-SHA512:
     runs-on: ubuntu-24.04
 
     steps:

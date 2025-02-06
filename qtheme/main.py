@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 
 
 user_path = path.expanduser('~')
-__version__ = '2.0.3'
+__version__ = '2.0.4'
 
 
 def main():
