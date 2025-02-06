@@ -1,5 +1,7 @@
 beautifulsoup4==4.12.3
-qtheme==1.4
 scrapeasy==0.12
 soupsieve==2.6
 validators==0.34.0
+twine==6.1.0
+setuptools==75.8.0
+wheel==0.45.1

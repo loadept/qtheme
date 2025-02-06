@@ -1,0 +1,31 @@
+name: Upload to PyPi
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  upload:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          cd qtheme
+          pip install -r requirements.txt
+          pip freeze
+          pip freeze | sed -E 's/([^=]+)/\x1b[32m&\x1b[0m/g'
+
+      - name: Generate Dist Wheel
+        run: |
+          cd qtheme
+          python setup.py sdist bdist_wheel
+          cat << EOF > .pypirc
+          [pypi]
+          username = __token__
+          password = ${{ secrets.PYPI_TOKEN }}
+          twine upload --config-file .pypirc dist/*

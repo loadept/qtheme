@@ -6,13 +6,13 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="qtheme",
-    version="1.5",
+    version="1.5.1",
     description="Tools for management qtile environment",
     long_description=README,
     long_description_content_type="text/markdown",
     author="Jesus Machaca",
     author_email="falcorgd@gmail.com",
-    url="https://github.com/jsusmachaca/qtheme",
+    url="https://github.com/loadept/qtheme",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

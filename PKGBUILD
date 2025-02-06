@@ -1,10 +1,10 @@
-# Maintainer: jsusmachaca <falcorgd@gmail.com>
+# Maintainer: loadept <falcorgd [at] gmail [dot] com>
 
 pkgname=qtheme
-pkgver=1.5
+pkgver=1.5.1
 pkgrel=1
 pkgdesc="Tool for management qtile desktop environment"
-url='https://github.com/jsusmachaca/qtheme'
+url='https://github.com/loadept/qtheme'
 arch=('any')
 license=('MIT')
 depends=('python>=3.12' 'qtile' 'kitty' 'fastfetch')
