@@ -8,7 +8,7 @@ class Qtile:
     def __init__(self, user_path) -> None:
         self.user_path = user_path
 
-    def set_bar_position(self, position: str = None):
+    def set_bar_position(self, position: str):
         try:
             full_path = path.join(self.user_path, '.config', 'qtile', 'themes', 'theme_selector.json')
 
@@ -35,7 +35,7 @@ class Qtile:
         except Exception as e:
             red(f'Unexpected error: {e}')
 
-    def set_qtile_theme(self, theme: str = None):
+    def set_qtile_theme(self, theme: str):
         try:
             full_path = path.join(self.user_path, '.config', 'qtile', 'themes', 'theme_selector.json')
             qtile_theme_path = path.join(self.user_path, '.config', 'qtile', 'themes')

@@ -7,7 +7,7 @@ class Kitty:
     def __init__(self, user_path) -> None:
         self.user_path = user_path
 
-    def set_terminal_theme(self, theme: str = None):
+    def set_terminal_theme(self, theme: str):
         try:
             kitty_conf_path = path.join(self.user_path, '.config', 'kitty', 'kitty.conf')
             kitty_theme_path = path.join(self.user_path, '.config', 'kitty', 'themes')
@@ -42,7 +42,7 @@ class Kitty:
         except Exception as e:
             red(f'Unexpected error: {e}')
 
-    def set_terminal_font(self, font_family: str = None):
+    def set_terminal_font(self, font_family: str):
         try:
             kitty_conf_path = path.join(self.user_path, '.config', 'kitty', 'kitty.conf')
 
@@ -73,7 +73,7 @@ class Kitty:
         except Exception as e:
             red(f'Unexpected error: {e}')
 
-    def set_terminal_opacity(self, opacity: str = None):
+    def set_terminal_opacity(self, opacity: str):
         try:
             kitty_conf_path = path.join(self.user_path, '.config', 'kitty', 'kitty.conf')
 
