@@ -46,6 +46,9 @@ jobs:
       - name: Generate Dist Wheel
         run: |
           python setup.py sdist bdist_wheel
+
+      - name: Upload with twine
+        run: |
           cat << EOF > .pypirc
           [pypi]
           username = __token__
