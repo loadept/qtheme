@@ -34,6 +34,15 @@ jobs:
     if: success()
 
     steps:
+      - name: Clone project for PyPi
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
       - name: Generate Dist Wheel
         run: |
           python setup.py sdist bdist_wheel
