@@ -1,0 +1,34 @@
+name: Validation format
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  Check-Sintax:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip freeze | sed -E 's/([^=]+)/\x1b[32m&\x1b[0m/g'
+      
+      - name: MyPy Validation
+        run: |
+          mypy .
+
+      - name: Flake8 Validation
+        run: |
+          flake8
+      
+      - name: Validate builds
+        run: |
+          python setup.py check
+          python setup.py sdist bdist_wheel
+          twine check dist/*
