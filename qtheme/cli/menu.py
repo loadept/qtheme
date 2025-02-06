@@ -8,10 +8,18 @@ class Menu:
         self.user_path = user_path
 
     def menu_themes(self):
-        full_path = path.join(self.user_path, '.config', 'qtile', 'themes', 'theme_selector.json')
-        qtile_themes_path = path.join(self.user_path, '.config', 'qtile', 'themes')
-        kitty_themes_path = path.join(self.user_path, '.config', 'kitty', 'themes')
-        kitty_file = path.join(self.user_path, '.config', 'kitty', 'kitty.conf')
+        full_path = path.join(
+            self.user_path, '.config', 'qtile', 'themes', 'theme_selector.json'
+        )
+        qtile_themes_path = path.join(
+            self.user_path, '.config', 'qtile', 'themes'
+        )
+        kitty_themes_path = path.join(
+            self.user_path, '.config', 'kitty', 'themes'
+        )
+        kitty_file = path.join(
+            self.user_path, '.config', 'kitty', 'kitty.conf'
+        )
 
         qtile_index = 0
         kitty_index = 0
@@ -34,7 +42,11 @@ class Menu:
                 continue
             qtile_index += 1
             theme_name = theme.split('.')[0]
-            maker = lambda text : f'\033[34m{text}*\033[0m' if theme_name == cur_theme_qt.get('theme') else text
+            maker = (
+                lambda text: f'\033[34m{text}*\033[0m'
+                if theme_name == cur_theme_qt.get('theme') else text
+            )
+
             blue(f'[{qtile_index}] -> {maker(theme_name)}')
         print('')
 
@@ -42,5 +54,9 @@ class Menu:
         for theme in listdir(kitty_themes_path):
             kitty_index += 1
             theme_name = theme.split('.')[0]
-            maker = lambda text : f'\033[34m{text}*\033[0m' if theme_name == cur_theme_kitty else text
+            maker = (
+                lambda text: f'\033[34m{text}*\033[0m'
+                if theme_name == cur_theme_kitty else text
+            )
+
             blue(f'[{kitty_index}] -> {maker(theme_name)}')

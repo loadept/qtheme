@@ -5,27 +5,65 @@ from argparse import ArgumentParser
 
 
 user_path = path.expanduser('~')
-__version__ = '1.5.1'
+__version__ = '1.5.2'
+
 
 def main():
     try:
         qtile = Qtile(user_path)
         kitty = Kitty(user_path)
         menu = Menu(user_path)
+
         parser = ArgumentParser(
             prog='qtheme',
-            description='Ideal tool to control the themes of your qtile environment and your kitty terminal.'
+            description=(
+                'Ideal tool to control the themes of your qtile environment '
+                'and your kitty terminal.'
+            )
         )
 
-        parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
-        parser.add_argument('-ls', '--list', action='store_true', help='List available themes')
-        parser.add_argument('-t', dest='theme', help='Theme to set', metavar='theme')
-        parser.add_argument('-p', dest='position', help='Position of the qtile bar [top/bottom] or [t/b]', metavar='position')
+        parser.add_argument(
+            '-v', '--version',
+            action='version',
+            version='%(prog)s ' + __version__
+        )
+        parser.add_argument(
+            '-ls', '--list',
+            action='store_true',
+            help='List available themes'
+        )
+        parser.add_argument(
+            '-t',
+            dest='theme',
+            help='Theme to set',
+            metavar='theme'
+        )
+        parser.add_argument(
+            '-p',
+            dest='position',
+            help='Position of the qtile bar [top/bottom] or [t/b]',
+            metavar='position'
+        )
 
         group = parser.add_argument_group('Terminal options')
-        group.add_argument('-k', dest='terminal', help='Theme to set for Kitty terminal', metavar='kitty-theme')
-        group.add_argument('-kf', dest='terminal_font', help='Font to set for Kitty Terminal', metavar='kitty-font')
-        group.add_argument('-ko', dest='terminal_opacity', help='Opacity to set for Kitty Terminal', metavar='kitty-opacity')
+        group.add_argument(
+            '-k',
+            dest='terminal',
+            help='Theme to set for Kitty terminal',
+            metavar='kitty-theme'
+        )
+        group.add_argument(
+            '-kf',
+            dest='terminal_font',
+            help='Font to set for Kitty Terminal',
+            metavar='kitty-font'
+        )
+        group.add_argument(
+            '-ko',
+            dest='terminal_opacity',
+            help='Opacity to set for Kitty Terminal',
+            metavar='kitty-opacity'
+        )
         args = parser.parse_args()
 
         if args.list:
@@ -42,6 +80,7 @@ def main():
 
     except Exception as e:
         red(f'Unexpected error: {e}')
+
 
 if __name__ == '__main__':
     main()

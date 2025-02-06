@@ -1,5 +1,6 @@
 from os import path
 import subprocess
+from typing import Optional
 from qtheme.utils.colors import green, red
 
 
@@ -7,10 +8,14 @@ class Kitty:
     def __init__(self, user_path) -> None:
         self.user_path = user_path
 
-    def set_terminal_theme(self, theme: str):
+    def set_terminal_theme(self, theme: Optional[str]):
         try:
-            kitty_conf_path = path.join(self.user_path, '.config', 'kitty', 'kitty.conf')
-            kitty_theme_path = path.join(self.user_path, '.config', 'kitty', 'themes')
+            kitty_conf_path = path.join(
+                self.user_path, '.config', 'kitty', 'kitty.conf'
+            )
+            kitty_theme_path = path.join(
+                self.user_path, '.config', 'kitty', 'themes'
+            )
 
             if theme is None:
                 return
@@ -28,7 +33,9 @@ class Kitty:
                         lines[index] = f'include themes/{theme}.conf\n'
                         break
                 else:
-                    raise ValueError('Theme section not found in Kitty configuration file.')
+                    raise ValueError(
+                        'Theme section not found in Kitty configuration file.'
+                    )
 
                 file.seek(0)
                 file.writelines(lines)
@@ -42,9 +49,11 @@ class Kitty:
         except Exception as e:
             red(f'Unexpected error: {e}')
 
-    def set_terminal_font(self, font_family: str):
+    def set_terminal_font(self, font_family: Optional[str]):
         try:
-            kitty_conf_path = path.join(self.user_path, '.config', 'kitty', 'kitty.conf')
+            kitty_conf_path = path.join(
+                self.user_path, '.config', 'kitty', 'kitty.conf'
+            )
 
             if font_family is None:
                 return
@@ -59,7 +68,9 @@ class Kitty:
                         lines[index] = f'font_family {font_family}\n'
                         break
                 else:
-                    raise ValueError('Theme section not found in Kitty configuration file.')
+                    raise ValueError(
+                        'Theme section not found in Kitty configuration file.'
+                    )
 
                 file.seek(0)
                 file.writelines(lines)
@@ -73,9 +84,11 @@ class Kitty:
         except Exception as e:
             red(f'Unexpected error: {e}')
 
-    def set_terminal_opacity(self, opacity: str):
+    def set_terminal_opacity(self, opacity: Optional[str]):
         try:
-            kitty_conf_path = path.join(self.user_path, '.config', 'kitty', 'kitty.conf')
+            kitty_conf_path = path.join(
+                self.user_path, '.config', 'kitty', 'kitty.conf'
+            )
 
             if opacity is None:
                 return
@@ -90,7 +103,9 @@ class Kitty:
                         lines[index] = f'background_opacity {opacity}\n'
                         break
                 else:
-                    raise ValueError('Theme section not found in Kitty configuration file.')
+                    raise ValueError(
+                        'Theme section not found in Kitty configuration file.'
+                    )
 
                 file.seek(0)
                 file.writelines(lines)
