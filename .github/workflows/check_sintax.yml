@@ -45,14 +45,3 @@ jobs:
       - name: Validate twine dist
         run: |
           twine check dist/*
-
-      - name: Download tarball
-        run: |
-          tag=$(git describe --tags --abbrev=0)
-          wget https://github.com/loadept/qtheme/archive/refs/tags/${tag}.tar.gz
-
-      - name: Check sha
-        run: |
-          tag=$(git describe --tags --abbrev=0)
-          sha=$(sha512sum $tag.tar.gz | awk '{print $1}')
-          sed "s/^sha512sums=('.*')\$/sha512sums=('$sha')/" PKGBUILD
