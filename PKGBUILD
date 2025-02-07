@@ -1,7 +1,7 @@
 # Maintainer: loadept <falcorgd [at] gmail [dot] com>
 
 pkgname=qtheme
-pkgver=2.0.4
+pkgver=2.0.5
 pkgrel=1
 pkgdesc="Tool for management qtile desktop environment"
 url='https://github.com/loadept/qtheme'
