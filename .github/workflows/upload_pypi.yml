@@ -94,4 +94,4 @@ jobs:
         with:
           commit_message: Update sha512sum for new release
           file_pattern: "PKGBUILD"
-          branch: ${{ github.ref_name }}
+          branch: master
