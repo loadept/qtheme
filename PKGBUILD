@@ -15,8 +15,6 @@ source=(
 sha512sums=('0b9196f5e77d3c3aa0c346688af5b7432820c2244a86047c0139111482f258d93039d1d69598607f42fb7212d4c4702d6b4fa838086cb17ef0858e996920d2d6')
 
 package() {
-	echo "Installing ${pkgname}-${pkgver} into ${pkgdir}"
-
 	python -m installer --destdir="$pkgdir" "${srcdir}/${pkgname}-${pkgver}-py3-none-any.whl"
 
 	install -Dm 644 $pkgdir/usr/lib/python3.*/site-packages/qtheme-${pkgver}.dist-info/licenses/LICENSE \
