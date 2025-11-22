@@ -1,4 +1,5 @@
 venv
+.venv
 __pycache__
 dist
 pkg
@@ -10,3 +11,4 @@ build
 src
 .pypirc
 .mypy_cache
+.ruff_cache

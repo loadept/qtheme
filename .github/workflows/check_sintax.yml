@@ -1,47 +1,39 @@
-name: Validation format
+name: Check Code
 
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
-  Check-Sintax:
-    runs-on: ubuntu-24.04
+  lint_code:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Check python version
-        run: |
-          python --version
-
-      - name: Clone project
-        uses: actions/checkout@v4
+      - name: Checkout project
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+
+      - name: Download python
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.13' 
+          python-version: "3.13"
+
+      - name: Download uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip freeze | sed -E 's/([^=]+)/\x1b[32m&\x1b[0m/g'
+        run: uv sync --group dev
 
-      - name: MyPy Validation
-        run: |
-          mypy .
-
-      - name: Flake8 Validation
-        run: |
-          flake8
+      - name: Lint code
+        run: uv run ruff check
       
-      - name: Validate setup
-        run: |
-          python setup.py check
+      - name: Check format
+        run: uv run ruff format --check
 
-      - name: Validate build dist
-        run: |
-          python setup.py sdist bdist_wheel
-
-      - name: Validate twine dist
-        run: |
-          twine check dist/*
+      - name: Validate build
+        run: uv build

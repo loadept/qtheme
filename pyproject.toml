@@ -1,0 +1,24 @@
+[project]
+name = "qtheme"
+version = "3.0.1"
+description = "Tool for management qtile environment"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13"
+authors = [{ name = "loadept" }]
+maintainers = [{ name = "loadept", email = "loadept3@gmail.com" }]
+dependencies = [
+    "pydantic>=2.12.4",
+]
+
+[project.scripts]
+qtheme = "qtheme:main"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.6",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["qtheme*"]
