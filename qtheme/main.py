@@ -70,13 +70,15 @@ def main():
         menu = Menu(user_path)
 
         is_action: bool = args.list or args.check
-        has_config_options: bool = any([
-            args.theme,
-            args.position,
-            args.terminal,
-            args.terminal_font,
-            args.terminal_opacity,
-        ])
+        has_config_options: bool = any(
+            [
+                args.theme,
+                args.position,
+                args.terminal,
+                args.terminal_font,
+                args.terminal_opacity,
+            ]
+        )
 
         if is_action and has_config_options:
             parser.error(
