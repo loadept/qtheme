@@ -31,7 +31,6 @@ jobs:
           uv build
 
       - name: Publish to PyPI
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: |
           uv publish --username __token__ --password ${{ secrets.PYPI_TOKEN }}
 

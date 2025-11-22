@@ -7,7 +7,7 @@ pkgdesc="Tool for management qtile desktop environment"
 url='https://github.com/loadept/qtheme'
 arch=('any')
 license=('MIT')
-depends=('python>=3.12' 'qtile' 'kitty' 'fastfetch')
+depends=('python>=3.12' 'python-pydantic' 'qtile' 'kitty' 'fastfetch')
 makedepends=('python-installer')
 source=(
 	${pkgname}-${pkgver}-py3-none-any.whl::${url}/releases/download/v${pkgver}/qtheme-${pkgver}-py3-none-any.whl
