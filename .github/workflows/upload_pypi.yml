@@ -74,5 +74,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -am "update PKGBUILD for version ${tag}"
+          git add PKGBUILD
+          git commit -m "update PKGBUILD for version ${tag}"
           git push origin HEAD:master
