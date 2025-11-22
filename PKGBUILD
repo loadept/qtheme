@@ -1,4 +1,4 @@
-# Maintainer: loadept <falcorgd [at] gmail [dot] com>
+# Maintainer: loadept <loadept3 [at] gmail [dot] com>
 
 pkgname=qtheme
 pkgver=2.0.6
@@ -8,17 +8,20 @@ url='https://github.com/loadept/qtheme'
 arch=('any')
 license=('MIT')
 depends=('python>=3.12' 'qtile' 'kitty' 'fastfetch')
-source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz)
-sha512sums=('23a484ea93cdf0586d0843371515ea6148ae502ff21a855aaf047d69d8f427081bab60cfc37c771ba9c2e84bb89c8065ddd532613bdecee7ed8fdc907c88e597')
-
-build() {
-	cd $pkgname-$pkgver
-	python setup.py build
-}
+makedepends=('python-installer')
+source=(
+	${pkgname}-${pkgver}-py3-none-any.whl::${url}/releases/download/v${pkgver}/qtheme-${pkgver}-py3-none-any.whl
+)
+sha512sums=('36345e0bdb0cfd2bd2cc12171c454763e906fa35576721e7c1554dbbad21ec32aa195fb5e0d241197372f2dad7253ebe2e78b03d55318a282a342f967ce47cc7')
 
 package() {
-	cd $pkgname-$pkgver
-	python setup.py install --prefix=/usr --root="${pkgdir}" -O1 --skip-build
-	install -Dm 644 LICENSE -t "${pkgdir}"/usr/share/licenses/${pkgname}
-	install -Dm 644 README.md -t "${pkgdir}"/usr/share/doc/${pkgname}
+	echo "Installing ${pkgname}-${pkgver} into ${pkgdir}"
+
+	python -m installer --destdir="$pkgdir" "${srcdir}/${pkgname}-${pkgver}-py3-none-any.whl"
+
+	install -Dm 644 $pkgdir/usr/lib/python3.*/site-packages/qtheme-${pkgver}.dist-info/licenses/LICENSE \
+		"${pkgdir}"/usr/share/licenses/${pkgname}
+
+	install -Dm 644 $pkgdir/usr/lib/python3.*/site-packages/qtheme-${pkgver}.dist-info/METADATA \
+		"${pkgdir}"/usr/share/doc/${pkgname}
 }

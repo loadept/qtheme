@@ -1,97 +1,78 @@
 name: Upload to PyPi
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-  Check-Sintax:
-    runs-on: ubuntu-24.04
+  Publish:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Clone project
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.13' 
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip freeze | sed -E 's/([^=]+)/\x1b[32m&\x1b[0m/g'
-      
-      - name: MyPy Validation
-        run: |
-          mypy .
-
-      - name: Flake8 Validation
-        run: |
-          flake8
-
-  Upload-PyPi:
-    runs-on: ubuntu-24.04
-    needs:
-      - Check-Sintax
-    if: success()
-
-    steps:
-      - name: Clone project for PyPi
-        uses: actions/checkout@v4
+          python-version: '3.13'
+          
+      - name: Download uv
+        uses: astral-sh/setup-uv@v6
         with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13' 
+          version: "latest"
 
-      - name: Install dependencies
+      - name: Install dependencies and build
         run: |
-          pip install -r requirements.txt
+          uv sync --all-groups --frozen
+          uv build
 
-      - name: Generate Dist Wheel
+      - name: Publish to PyPI
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: |
-          python setup.py sdist bdist_wheel
+          uv publish --username __token__ --password ${{ secrets.PYPI_TOKEN }}
 
-      - name: Upload with twine
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cat << EOF > .pypirc
-          [pypi]
-          username = __token__
-          password = ${{ secrets.PYPI_TOKEN }}
-          EOF
-          twine upload --config-file .pypirc dist/*
+          gh release create ${{ github.ref_name }} \
+            dist/qtheme-*-py3-none-any.whl \
+            --title "Qtheme ${{ github.ref_name }}" \
+            --generate-notes
 
   Update-PKGBUILD:
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: write
+    runs-on: ubuntu-latest
     needs:
-      - Check-Sintax
-      - Upload-PyPi 
+      - Publish
     if: success()
-    
+
     steps:
       - name: Clone project
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download tarball
         run: |
-          tag=$(git describe --tags --abbrev=0)
-          wget https://github.com/loadept/qtheme/archive/refs/tags/${tag}.tar.gz
+          tag=$(git describe --tags --abbrev=0 | sed 's/^v//')
+          wget https://github.com/loadept/qtheme/releases/download/v${tag}/qtheme-${tag}-py3-none-any.whl
 
       - name: Get SHA512 checksum
         run: |
-          tag=$(git describe --tags --abbrev=0)
-          sha=$(sha512sum $tag.tar.gz | awk '{print $1}')
+          tag=$(git describe --tags --abbrev=0 | sed 's/^v//')
+          sha=$(sha512sum qtheme-${tag}-py3-none-any.whl | awk '{print $1}')
           sed -i "s/^sha512sums=('.*')\$/sha512sums=('$sha')/" PKGBUILD
-          rm -f "${tag}.tar.gz"
+          sed -i "s/^pkgver=[0-9]\.[0-9]\.[0-9]/pkgver=$tag/" PKGBUILD
+          rm -f "qtheme-${tag}-py3-none-any.whl"
 
       - name: Push commit
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Update sha512sum for new release
-          file_pattern: "PKGBUILD"
-          branch: master
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "update PKGBUILD for version ${tag}"
+          git push

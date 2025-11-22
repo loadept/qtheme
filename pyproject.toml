@@ -21,4 +21,4 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["qtheme*"]
+include = ["qtheme*", "LICENSE", "README.md"]
