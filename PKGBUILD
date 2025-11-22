@@ -1,7 +1,7 @@
 # Maintainer: loadept <loadept3 [at] gmail [dot] com>
 
 pkgname=qtheme
-pkgver=2.0.6
+pkgver=3.0.1
 pkgrel=1
 pkgdesc="Tool for management qtile desktop environment"
 url='https://github.com/loadept/qtheme'
@@ -12,7 +12,7 @@ makedepends=('python-installer')
 source=(
 	${pkgname}-${pkgver}-py3-none-any.whl::${url}/releases/download/v${pkgver}/qtheme-${pkgver}-py3-none-any.whl
 )
-sha512sums=('36345e0bdb0cfd2bd2cc12171c454763e906fa35576721e7c1554dbbad21ec32aa195fb5e0d241197372f2dad7253ebe2e78b03d55318a282a342f967ce47cc7')
+sha512sums=('0b9196f5e77d3c3aa0c346688af5b7432820c2244a86047c0139111482f258d93039d1d69598607f42fb7212d4c4702d6b4fa838086cb17ef0858e996920d2d6')
 
 package() {
 	echo "Installing ${pkgname}-${pkgver} into ${pkgdir}"
